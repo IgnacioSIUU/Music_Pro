@@ -1,0 +1,57 @@
+<div class="alert alert-primary" role="alert">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="row" colspan="3" class="text-center">CARRITO</th>
+        </tr>
+        <tr>
+          <th scope="col">NOMBRE</th>
+          <th scope="col">PRECIO</th>
+          <th scope="col" >CANTIDAD</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% load humanize %}
+      {% if request.session.carrito.items %}
+      {% for key, value in request.session.carrito.items %}
+        <tr>
+          <td>{{value.nombre}}</td>
+          <td>${{value.acumulado | intcomma }}</td>
+          <td>{{value.cantidad}}
+            <a href="{% url 'Add' value.articulo_id %}" class="badge btn btn-dark badge-dark">+</a>
+            <a href="{% url 'Res' value.articulo_id %}" class="badge btn btn-dark badge-dark">-</a>
+          </td>
+        </tr>
+      {% endfor %}
+      {% else %}
+      <tr>
+          <td colspan="3">
+              <div class="alert alert-danger text-center"> 0 ARTICULOS AGREGADOS </div>
+          </td>
+      </tr>
+      {% endif %}
+        <tr>
+          <th scope="row">Total:</th>
+          <td colspan="2">$ {{total_carrito | intcomma}}</td>
+        </tr>
+
+        
+
+      </tbody>
+
+      <th scope="row">
+        <label for="nombreCliente">Nombre del Cliente:</label>
+      </br>
+      </br>
+        <input type="text" id="nombreCliente">
+      </th>
+
+    </table>
+    <hr>
+    </div>
+    <div class="row text-center">
+        <div class="col-6"><a href="{% url 'Lim' %}" class="btn btn-danger">Limpiar</a></div>
+        <!--Botón para mostrar mensaje emerjente-->
+        <button class="btn btn-success col-6" onclick="mostrarMensaje()">Guardar carrito</button>
+
+    </div>
